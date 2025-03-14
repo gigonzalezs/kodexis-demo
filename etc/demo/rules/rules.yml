@@ -1,0 +1,72 @@
+rules:
+  - name: "Detectar Persona mayor de 50 años"
+    condition: |
+      $fact : Fact(
+          type == "person",
+          $nombre : data.get("nombre").asString(),
+          $edad : data.get("edad").asInt(),
+          $edad > 50 && $edad <= 80
+      )
+    then:
+      action: "notificar"
+      data:
+        mensaje: "La persona Nombre: ${nombre} es mayor de 50 años, Edad: ${edad}"
+        tipo: "informacion"
+
+  - name: "Detectar Persona mayor de 80 años"
+    condition: |
+      $fact : Fact(
+          type == "person",
+          $nombre : data.get("nombre").asString(),
+          $edad : data.get("edad").asInt(),
+          $edad > 80
+      )
+    then:
+      action: "notificar"
+      data:
+        mensaje: "La persona Nombre: ${nombre} es mayor de 80 años, Edad: ${edad}"
+        tipo: "advertencia"
+
+  - name: "Detectar Persona vive en Palermo"
+    condition: |
+      $fact : Fact(
+          type == "person",
+          $nombre : data.get("nombre").asString(),
+          $edad : data.get("edad").asInt(),
+          $cp: data.get("direccion.CP").asInt(),
+          $cp == 1425
+      )
+    then:
+      action: "actualizar_ubicacion"
+      data:
+        mensaje: "La persona Nombre: ${nombre} vive en Palermo"
+        zona: "Palermo"
+
+  - name: "Prueba FechaNacimiento"
+    condition: |
+      $fact : Fact(
+          type == "person",
+          $nombre : data.get("nombre").asString(),
+          $fnac: data.get("fechaNacimiento").asDate(),
+          $fnac.plusYears(80).getYear() <= now().getYear()
+      )
+    then:
+      action: "envejecer"
+      data:
+        mensaje: "La persona Nombre: ${nombre} según su fecha de nacimiento es mayor de 80, nació en el año: ${fnac.getYear()}, edad: ${ChronoUnit.YEARS.between($fnac, now())}"
+        b: 2
+        c: 3
+
+  - name: "Prueba FechaNacimiento 90"
+    condition: |
+      $fact : Fact(
+          type == "person",
+          $nombre : data.get("nombre").asString(),
+          $fnac : data.get("fechaNacimiento").asDate(),
+          ChronoUnit.YEARS.between($fnac, now()) > 90
+      )
+    then:
+      action: "envejecer"
+      data:
+        mensaje: "La persona Nombre: ${nombre} según su fecha de nacimiento es mayor de 90, nació en el año: ${fnac.getYear()}"
+        a: 1
