@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "acd60f41-15ea-45ea-bc99-db2dc048601b",
+		"name": "kodexis-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42667138"
+	},
+	"item": [
+		{
+			"name": "execute",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"person\",\n    \"data\": {\n        \"nombre\": \"Pepe\",\n        \"edad\": 38,\n        \"fechaNacimiento\": \"1995-04-22T13:45:00\",\n        \"direccion\": {\n            \"calle\": \"Thames\",\n            \"altura\": 2363,\n            \"CP\": 1425\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/execute/ruleSet01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"execute",
+						"ruleSet01"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
