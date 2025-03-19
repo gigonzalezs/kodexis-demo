@@ -24,8 +24,8 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("com.networknt:json-schema-validator:1.0.86")
 
-	implementation("org.kodexis.decisionexpert:kodexis-api:2.0.0")
-	implementation("org.kodexis.decisionexpert:kodexis-core:2.0.0")
+	implementation("org.kodexis.decisionexpert:kodexis-api:2.0.1")
+	implementation("org.kodexis.decisionexpert:kodexis-core:2.0.1")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
