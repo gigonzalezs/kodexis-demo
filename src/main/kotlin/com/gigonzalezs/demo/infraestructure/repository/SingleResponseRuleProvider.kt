@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class RuleProvider(
+class SingleResponseRuleProvider(
     @Value("\${com.gigonzalezs.kodexis.demo.rulesPath}") val rulePath: String) : YamlFileRuleProviderBase(rulePath) {
 
     @Autowired

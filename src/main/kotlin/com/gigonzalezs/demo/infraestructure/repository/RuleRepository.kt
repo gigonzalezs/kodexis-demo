@@ -11,7 +11,10 @@ import org.springframework.stereotype.Repository
 class RuleRepository : IRulesRepository {
 
     @Autowired
-    private lateinit var provider: RuleProvider
+    private lateinit var singleResponseRuleProvider: SingleResponseRuleProvider
+
+    @Autowired
+    private lateinit var multiResponseProvider: MultiResponseRuleProvider
 
     @Autowired
     private lateinit var executorFactory: ExecutorFactory
@@ -19,12 +22,18 @@ class RuleRepository : IRulesRepository {
     private val executorsByName = HashMap<String, IRuleExecutor>()
 
     override fun getRuleExecutor(name: String): IRuleExecutor =
-         executorsByName[name] ?: createRuleExecutor().also {
+         executorsByName[name] ?: createRuleExecutor(name).also {
             executorsByName[name] = it
         }
 
-    private fun createRuleExecutor(): IRuleExecutor = executorFactory
-        .withRulesProvider(provider)
-        .useSingleResponse()
+    private fun createRuleExecutor(name: String): IRuleExecutor = executorFactory
+        .also {
+            if (name.contains("multi")) {
+                it.withRulesProvider(multiResponseProvider).useMultiResponse()
+
+            } else {
+                it.withRulesProvider(singleResponseRuleProvider).useSingleResponse()
+            }
+        }
         .build()
 }
